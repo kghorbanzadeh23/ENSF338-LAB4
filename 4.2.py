@@ -32,21 +32,32 @@ def linear_search(arr, target):
 
 #5
 
-vectorSizes = [1000,2000,3000,4000,5000,6000,7000,10000,15000, 20000]
+vectorSizes = [1000,2000,3000,4000,5000]
+sizes = []
+binaryTimes = []
+linearTimes = []
+
 
 for i in vectorSizes:
     arr = sorted([random.randint(1, i*10) for _ in range(i)])  # Create a sorted vector
-    sizes = np.full((100), i)
-
-    tm = timeit.repeat(lambda: binary_search(arr,random.choice(arr)), repeat=100, number=1)
-    plt.scatter(sizes,tm, c="r")
+    target = random.choice(arr)
+    sizes.append(np.full((100), i))
     
-    tm = timeit.repeat(lambda: linear_search(arr,random.choice(arr)), repeat=100, number=1)
-    plt.scatter(sizes,tm, c="b")
+    tm = timeit.repeat(lambda: binary_search(arr,target), repeat=100, number=1)
+    binaryTimes.append(tm)
+
+    tm = timeit.repeat(lambda: linear_search(arr,target), repeat=100, number=1)
+    linearTimes.append(tm)
 
 
-# Save the plot to a file named output.6.4.png
+
+plt.scatter(sizes,linearTimes, c="b", label="Linear Search")
+plt.scatter(sizes,binaryTimes, c="r", label="Binary Search")
+
+
+# Save the plot to a file named output.4.2.5.png
 plt.xlabel('Number of Records')
 plt.ylabel('Time')
+plt.legend()
 plt.title('Comparison Between Linear and Binary')
 plt.savefig('output.4.2.5.png')
