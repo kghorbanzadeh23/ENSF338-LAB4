@@ -2,7 +2,6 @@ import timeit
 import random
 from matplotlib import pyplot as plt
 import numpy as np
-from scipy.optimize import curve_fit
 
 def binary_search(arr,target):
     left = 0
@@ -36,6 +35,7 @@ vectorSizes = [1000,2000,3000,4000,5000]
 sizes = []
 binaryTimes = []
 linearTimes = []
+
 
 
 for i in vectorSizes:
