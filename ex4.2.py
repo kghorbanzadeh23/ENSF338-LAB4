@@ -52,12 +52,19 @@ for i in vectorSizes:
 
 
 plt.scatter(sizes,linearTimes, c="b", label="Linear Search")
-plt.scatter(sizes,binaryTimes, c="r", label="Binary Search")
 
-
-# Save the plot to a file named output.4.2.5.png
 plt.xlabel('Number of Records')
 plt.ylabel('Time')
 plt.legend()
-plt.title('Comparison Between Linear and Binary')
-plt.savefig('output.4.2.5.png')
+plt.title('Linear Times')
+plt.savefig('output.4.2.5.1.png')
+
+plt.clf()
+
+plt.scatter(sizes,binaryTimes, c="r", label="Binary Search")
+
+plt.xlabel('Number of Records')
+plt.ylabel('Time')
+plt.legend()
+plt.title('Binary Times')
+plt.savefig('output.4.2.5.2.png')
