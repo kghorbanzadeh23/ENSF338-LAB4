@@ -108,4 +108,5 @@ if __name__ == "__main__":
         time_taken_S_to_S_plus_1.append(time_S_to_S_plus_1)
 
     plot_distribution(time_taken_S_minus_1_to_S, 'Distribution of time taken to grow from S-1 to S')
+    plt.clf()
     plot_distribution(time_taken_S_to_S_plus_1, 'Distribution of time taken to grow from S to S+1')
