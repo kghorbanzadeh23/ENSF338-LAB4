@@ -26,12 +26,12 @@ def linear_search(arr, target):
     return -1  # Return -1 if the target is not in the list
 
 #4
-#Binary is log(n)
-#Linear is n
+#Binary is O(log(n))
+#Linear is O(n)
 
 #5
 
-vectorSizes = [1000,2000,3000,4000,5000]
+vectorSizes = [1000,1500,2000,2500,3000,3500,4000,4500,5000]
 sizes = []
 binaryTimes = []
 linearTimes = []
