@@ -31,7 +31,7 @@ def linear_search(arr, target):
 
 #5
 
-vectorSizes = [1000,1500,2000,2500,3000,3500,4000,4500,5000]
+vectorSizes = [1000,2500,5000,7500,10000]
 sizes = []
 binaryTimes = []
 linearTimes = []
@@ -41,14 +41,13 @@ linearTimes = []
 for i in vectorSizes:
     arr = sorted([random.randint(1, i*10) for _ in range(i)])  # Create a sorted vector
     target = random.choice(arr)
-    sizes.append(np.full((100), i))
+    sizes += [i for j in range(100)]
     
     tm = timeit.repeat(lambda: binary_search(arr,target), repeat=100, number=1)
     binaryTimes.append(tm)
 
     tm = timeit.repeat(lambda: linear_search(arr,target), repeat=100, number=1)
     linearTimes.append(tm)
-
 
 
 plt.scatter(sizes,linearTimes, c="b", label="Linear Search")
