@@ -33,49 +33,42 @@ def linear_search(arr, target):
 
 #5
 
-vectorSizes = [1000,5000,10000,15000, 20000]
-sizes = []
+vectorSizes = [1000,5000,10000,15000,20000]
 binaryTimes = []
 linearTimes = []
-
-
 
 for i in vectorSizes:
     arr = sorted([random.randint(1, i*10) for _ in range(i)])  # Create a sorted vector
     target = random.choice(arr)
-    sizes += [i for j in range(100)]
     
     tm = timeit.repeat(lambda: binary_search(arr,target), repeat=100, number=1)
-    binaryTimes += tm
     print("The average time for Binary search with", i,"inputs is", sum(tm)/len(tm))
 
     tm = timeit.repeat(lambda: linear_search(arr,target), repeat=100, number=1)
-    linearTimes += tm
     print("The average time for Linear search with", i,"inputs is", sum(tm)/len(tm), '\n')
 
+arr = sorted([random.randint(1, 1000*10) for _ in range(1000)])  # Create a sorted vector
+target = random.choice(arr)
+    
+tm = timeit.repeat(lambda: binary_search(arr,target), repeat=100, number=1)
+binaryTimes += tm
 
-slope, intercept = np.polyfit(sizes, linearTimes, 1)
-linevalues = [slope * x + intercept for x in sizes]
-plt.scatter(sizes,linearTimes, c='b')
-plt.plot(sizes, linevalues, 'b', label="Linear Search")
+tm = timeit.repeat(lambda: linear_search(arr,target), repeat=100, number=1)
+linearTimes += tm
 
-plt.xlabel('Number of Records')
-plt.ylabel('Time')
-plt.legend()
+
+plt.hist(linearTimes, color='w', edgecolor = 'r',)
+
+plt.xlabel('Time(s)')
+plt.ylabel('Frequency')
 plt.title('Linear Times')
 plt.savefig('output.4.2.5.1.png')
 
 plt.clf()
 
-def log(x, a, b):
-    return a*np.log(x) + b
-constants = curve_fit(log, sizes, binaryTimes)
-linevalues = [constants[0][0] * np.log(x) + constants[0][1] for x in sizes]
-plt.scatter(sizes,binaryTimes, c='r')
-plt.plot(sizes, linevalues, 'r', label="Binary Search")
+plt.hist(linearTimes, color='w', edgecolor = 'b',)
 
-plt.xlabel('Number of Records')
-plt.ylabel('Time')
-plt.legend()
+plt.xlabel('Time(s)')
+plt.ylabel('Frequency')
 plt.title('Binary Times')
 plt.savefig('output.4.2.5.2.png')
