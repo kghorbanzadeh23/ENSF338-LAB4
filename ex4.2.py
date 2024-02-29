@@ -2,7 +2,9 @@ import timeit
 import random
 from matplotlib import pyplot as plt
 import numpy as np
+from scipy.optimize import curve_fit
 
+#optimized
 def binary_search(arr,target):
     left = 0
     right = len(arr) - 1
@@ -18,7 +20,7 @@ def binary_search(arr,target):
         else:
             right = mid - 1
     return -1  
-
+#non-optimized
 def linear_search(arr, target):
     for i in range(len(arr)):
         if arr[i] == target:
@@ -31,7 +33,7 @@ def linear_search(arr, target):
 
 #5
 
-vectorSizes = [1000,2500,5000,7500,10000]
+vectorSizes = [1000,5000,10000,15000, 20000]
 sizes = []
 binaryTimes = []
 linearTimes = []
@@ -44,13 +46,18 @@ for i in vectorSizes:
     sizes += [i for j in range(100)]
     
     tm = timeit.repeat(lambda: binary_search(arr,target), repeat=100, number=1)
-    binaryTimes.append(tm)
+    binaryTimes += tm
+    print("The average time for Binary search with", i,"inputs is", sum(tm)/len(tm))
 
     tm = timeit.repeat(lambda: linear_search(arr,target), repeat=100, number=1)
-    linearTimes.append(tm)
+    linearTimes += tm
+    print("The average time for Linear search with", i,"inputs is", sum(tm)/len(tm), '\n')
 
 
-plt.scatter(sizes,linearTimes, c="b", label="Linear Search")
+slope, intercept = np.polyfit(sizes, linearTimes, 1)
+linevalues = [slope * x + intercept for x in sizes]
+plt.scatter(sizes,linearTimes, c='b')
+plt.plot(sizes, linevalues, 'b', label="Linear Search")
 
 plt.xlabel('Number of Records')
 plt.ylabel('Time')
@@ -60,7 +67,12 @@ plt.savefig('output.4.2.5.1.png')
 
 plt.clf()
 
-plt.scatter(sizes,binaryTimes, c="r", label="Binary Search")
+def log(x, a, b):
+    return a*np.log(x) + b
+constants = curve_fit(log, sizes, binaryTimes)
+linevalues = [constants[0][0] * np.log(x) + constants[0][1] for x in sizes]
+plt.scatter(sizes,binaryTimes, c='r')
+plt.plot(sizes, linevalues, 'r', label="Binary Search")
 
 plt.xlabel('Number of Records')
 plt.ylabel('Time')
